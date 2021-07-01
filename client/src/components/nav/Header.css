@@ -1,0 +1,30 @@
+
+body{
+    height: 200vh;
+}
+/* .auth-container {
+
+    display: flex;
+    position: absolute;
+    right: 0;
+} */
+.right-side:nth-child(2) {
+
+    position: absolute!important;
+    right: 0;
+}
+.right-side:nth-child(3) {
+    right: 100px;
+    position: absolute!important;
+
+}
+@media (max-width: 450px) {
+    .right-side:nth-child(2) {
+
+        position: relative!important;
+    }
+    .right-side:nth-child(3) {
+        position: relative!important;
+    right: 0;
+    }
+  }

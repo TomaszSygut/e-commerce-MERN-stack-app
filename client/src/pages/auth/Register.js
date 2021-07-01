@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import {auth} from '../../firebase'
-import {toast, ToastContainer} from 'react-toastify'
+import {toast} from 'react-toastify'
 
-import 'react-toastify/dist/ReactToastify.css'
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +13,7 @@ const Register = () => {
    e.preventDefault()
 
    const config = {
-       url: 'http://localhost:3000/register/complete',
+       url: `${process.env.REACT_APP_REGISTER_REDIRECT_URL}`,
        handleCodeInApp: true
    } 
 
@@ -23,8 +22,12 @@ const Register = () => {
    toast.success(`Email is sent to ${email}, Click the link to complete your registration.`
    ); 
 
+   // save user email in local storage
+
    window.localStorage.setItem('emailForRegistration', email)
 
+
+   // clear state
    setEmail("");
   };
 
@@ -51,7 +54,7 @@ const Register = () => {
           {registerForm()}
         </div>
       </div>
-    </div>
+    </div> 
   );
 };
 

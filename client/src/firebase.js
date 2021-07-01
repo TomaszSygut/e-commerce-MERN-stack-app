@@ -5,6 +5,7 @@ import "firebase/auth";
   const config = {
     apiKey: "AIzaSyA-n1Gn6cCgbMn8wc5fbdM9X_qDPeyIwlg",
     authDomain: "ecommerce-a9075.firebaseapp.com",
+    databaseURL: "https://ecommerce-a9075.firebaseio.com",
     projectId: "ecommerce-a9075",
     storageBucket: "ecommerce-a9075.appspot.com",
     messagingSenderId: "673490560415",

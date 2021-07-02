@@ -10,7 +10,7 @@ const ForgotPassword = ({ history }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-//dddd
+//dddddd
     const config = {
       url: "http://localhost:3000/login",
       handleCodeInApp: true,

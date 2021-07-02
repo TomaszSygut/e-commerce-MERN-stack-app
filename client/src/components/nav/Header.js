@@ -67,7 +67,7 @@ history.push('/login')
       <SubMenu key="submenu2"icon={<SettingOutlined />} title="Username">
         <Item key="setting:1">Option 1</Item>
         <Item key="setting:2">Option 2</Item>
-        <Item key="setting:3" icon={<UserOutlined/>} onClick={logout}>Logout</Item>
+        <Item key="setting:3" icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
       </SubMenu>
     </Menu>
   );

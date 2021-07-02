@@ -37,6 +37,7 @@ dispatch({
   type: "LOGOUT",
   payload: null
 }); 
+ 
 
 history.push('/login')
 }

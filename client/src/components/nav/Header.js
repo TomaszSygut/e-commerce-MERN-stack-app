@@ -7,8 +7,9 @@ import {
   SettingOutlined,
   UserOutlined,
   UserAddOutlined,
+  LogoutOutlined
 } from "@ant-design/icons";
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom' 
 
 import firebase from 'firebase'
 import {useDispatch} from 'react-redux'
@@ -70,7 +71,7 @@ history.push('/login')
         <Item key="setting:3" icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
       </SubMenu>
     </Menu>
-  );
+  ); 
 };
-
+ 
 export default Header; 

@@ -10,15 +10,15 @@ body{
 } */
 .right-side:nth-child(2) {
 
-    position: absolute!important;
-    right: 0;
-}
-.right-side:nth-child(3) {
     right: 100px;
+    position: absolute!important;
+}
+.right-side, .right-side-username {
+    right: 0;
     position: absolute!important;
 
 }
-@media (max-width: 450px) {
+@media (max-width: 450px) { 
     .right-side:nth-child(2) {
 
         position: relative!important;

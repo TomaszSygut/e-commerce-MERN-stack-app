@@ -8,26 +8,26 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const createOrUpdateUser = async (authtoken) => {
-  return await axios.post(
+  return await axios.post( 
     `${process.env.REACT_APP_API}/create-or-update-user`,
     {},
     {
       headers: {
-        authtoken: authtoken,
+        authtoken,
       },
     }
   );
 };
+
 const Login = ({ history }) => {
   const [email, setEmail] = useState("thomassygut@gmail.com");
-  const [password, setPassword] = useState("Menelpl666");
+  const [password, setPassword] = useState("Menel666");
   const [loading, setLoading] = useState(false);
+
   const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
-    if (user && user.token) {
-      history.push("/");
-    }
+    if (user && user.token) history.push("/");
   }, [user]);
 
   let dispatch = useDispatch();
@@ -40,20 +40,23 @@ const Login = ({ history }) => {
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
 
-createOrUpdateUser(idTokenResult.token)
-.then(res =>{
-  console.log("CREATE OR UPDATE RES", res)
-})
-.catch() 
+      createOrUpdateUser(idTokenResult.token)
+        .then((res) => {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: res.data.name,
+              email: res.data.email,
+              token: idTokenResult.token,
+              role: res.data.role, 
+              _id: res.data._id 
+            },
+          });
+     
+        })
+        .catch();
 
-      // dispatch({
-      //   type: "LOGGED_IN_USER",
-      //   payload: {
-      //     email: user.email,
-      //     token: idTokenResult.token,
-      //   },
-      // });
-      // history.push("/");
+history.push("/")
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -61,7 +64,7 @@ createOrUpdateUser(idTokenResult.token)
     }
   };
 
-  ///////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////
 
   const googleLogin = async () => {
     auth
@@ -69,14 +72,19 @@ createOrUpdateUser(idTokenResult.token)
       .then(async (result) => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
-
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user.email,
-            token: idTokenResult.token,
-          },
-        });
+        createOrUpdateUser(idTokenResult.token)
+        .then((res) => {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: res.data.name,
+              email: res.data.email,
+              token: idTokenResult.token,
+              role: res.data.role, 
+              _id: res.data._id 
+            },
+          });
+        })
         history.push("/");
       })
       .catch((err) => {
@@ -84,8 +92,6 @@ createOrUpdateUser(idTokenResult.token)
         toast.error(err.message);
       });
   };
-
-  ///////////////////////////////////////////////////////////////////////////
 
   const loginForm = () => (
     <form onSubmit={handleSubmit}>
@@ -113,21 +119,18 @@ createOrUpdateUser(idTokenResult.token)
       <br />
       <Button
         onClick={handleSubmit}
-        className="mb-3"
         type="primary"
+        className="mb-3"
         block
         shape="round"
-        icon={<GoogleOutlined />}
+        icon={<MailOutlined />}
         size="large"
         disabled={!email || password.length < 6}
       >
-        {" "}
-        Login with Email/Password{" "}
+        Login with Email/Password
       </Button>
     </form>
   );
-
-  ///////////////////////////////////////////////////////////////////////////
 
   return (
     <div className="container p-5">
@@ -142,18 +145,18 @@ createOrUpdateUser(idTokenResult.token)
 
           <Button
             onClick={googleLogin}
-            className="mb-3"
             type="danger"
+            className="mb-3"
             block
             shape="round"
-            icon={<MailOutlined />}
+            icon={<GoogleOutlined />}
             size="large"
-            autoFocus
           >
             Login with Google
           </Button>
+
           <Link to="/forgot/password" className="float-right text-danger">
-            Forgot password?{" "}
+            Forgot Password
           </Link>
         </div>
       </div>

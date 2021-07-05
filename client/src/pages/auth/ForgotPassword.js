@@ -19,7 +19,7 @@ useEffect(() => {
     setLoading(true);
 //dddddd
     const config = {
-      url: "http://localhost:3000/login",
+      url: `${process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT}`,
       handleCodeInApp: true,
     };
 

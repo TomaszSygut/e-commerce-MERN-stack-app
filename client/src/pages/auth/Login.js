@@ -3,20 +3,32 @@ import { auth, googleAuthProvider } from "../../firebase";
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
-import { useDispatch,useSelector } from "react-redux";
-import {Link} from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
+const createOrUpdateUser = async (authtoken) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/create-or-update-user`,
+    {},
+    {
+      headers: {
+        authtoken: authtoken,
+      },
+    }
+  );
+};
 const Login = ({ history }) => {
   const [email, setEmail] = useState("thomassygut@gmail.com");
   const [password, setPassword] = useState("Menelpl666");
   const [loading, setLoading] = useState(false);
-  const {user} = useSelector(state => ({...state}))
+  const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
-    if(user && user.token) {
-      history.push("/")
+    if (user && user.token) {
+      history.push("/");
     }
-  }, [user])
+  }, [user]);
 
   let dispatch = useDispatch();
 
@@ -27,46 +39,53 @@ const Login = ({ history }) => {
       const result = await auth.signInWithEmailAndPassword(email, password);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
-      dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          email: user.email,
-          token: idTokenResult.token,
-        },
-      });
-      history.push("/");
+
+createOrUpdateUser(idTokenResult.token)
+.then(res =>{
+  console.log("CREATE OR UPDATE RES", res)
+})
+.catch() 
+
+      // dispatch({
+      //   type: "LOGGED_IN_USER",
+      //   payload: {
+      //     email: user.email,
+      //     token: idTokenResult.token,
+      //   },
+      // });
+      // history.push("/");
     } catch (error) {
       console.log(error);
       toast.error(error.message);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
-///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
 
   const googleLogin = async () => {
-auth.signInWithPopup(googleAuthProvider)
-.then(async(result) => {
-    const {user} = result
-    const idTokenResult = await user.getIdTokenResult();
+    auth
+      .signInWithPopup(googleAuthProvider)
+      .then(async (result) => {
+        const { user } = result;
+        const idTokenResult = await user.getIdTokenResult();
 
-    dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          email: user.email,
-          token: idTokenResult.token,
-        },
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: {
+            email: user.email,
+            token: idTokenResult.token,
+          },
+        });
+        history.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
       });
-history.push('/')
-})
-.catch((err) => {
-    console.log(err)
-    toast.error(err.message);  
-})
-
   };
 
-///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
 
   const loginForm = () => (
     <form onSubmit={handleSubmit}>
@@ -108,32 +127,34 @@ history.push('/')
     </form>
   );
 
-///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
 
   return (
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
           {loading ? (
-              <h4 className="text-danger">Loading...</h4>
+            <h4 className="text-danger">Loading...</h4>
           ) : (
-              <h4>Login</h4>
+            <h4>Login</h4>
           )}
-          {loginForm()} 
+          {loginForm()}
 
           <Button
-        onClick={googleLogin}
-        className="mb-3"
-        type="danger"
-        block
-        shape="round"
-        icon={<MailOutlined />}
-        size="large"
-        autoFocus
-      >
-          Login with Google
+            onClick={googleLogin}
+            className="mb-3"
+            type="danger"
+            block
+            shape="round"
+            icon={<MailOutlined />}
+            size="large"
+            autoFocus
+          >
+            Login with Google
           </Button>
-<Link to="/forgot/password" className="float-right text-danger">Forgot password?  </Link>
+          <Link to="/forgot/password" className="float-right text-danger">
+            Forgot password?{" "}
+          </Link>
         </div>
       </div>
     </div>

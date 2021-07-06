@@ -7,6 +7,8 @@ import {
   getCategories,
   removeCategory,
 } from "../../../functions/category";
+import { Link } from "react-router-dom";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const CategoryCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -30,8 +32,9 @@ const CategoryCreate = () => {
       .then((res) => {
         // console.log(res)
         setLoading(false);
-        setName('');
+        setName("");
         toast.success(`"${res.data.name}" is created`);
+        loadCategories();
       })
       .catch((err) => {
         console.log(err);
@@ -39,6 +42,21 @@ const CategoryCreate = () => {
         if (err.response.status === 400) toast.error(err.response.data);
       });
   };
+
+const handleRemove = async (slug) =>{
+ if(window.confirm("Are you sure that you want delete this category?")) {
+   setLoading(true)
+   removeCategory(slug, user.token)
+   .then(res => {
+     setLoading(false);
+     toast.error(`${res.data.name} deleted`)
+     loadCategories();
+   })
+   .catch(err => {
+    if (err.response.status === 400) toast.error(err.response.data);
+   })
+ }
+}
 
   const categoryForm = () => (
     <form onSubmit={handleSubmit}>
@@ -72,7 +90,23 @@ const CategoryCreate = () => {
           )}
           {categoryForm()}
           <hr />
-          {JSON.stringify(categories)}
+          {categories.map((c) => (
+            <div className="alert alert-secondary" key={c._id}>
+              {c.name}
+
+              <span onClick={() =>{
+                handleRemove(c.slug)
+              }}className="btn btn-sm float-right">
+                <DeleteOutlined className="text-danger" />
+              </span>
+
+              <span className="btn btn-sm float-right mr-3">
+                <Link to={`/admin/category/${c.slug}`}>
+                  <EditOutlined />
+                </Link>
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

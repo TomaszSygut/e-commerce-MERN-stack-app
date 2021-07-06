@@ -6,7 +6,6 @@ import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createOrUpdateUser } from "../../functions/auth";
-import {useHistory} from 'react-router-dom'
 
 
 
@@ -21,7 +20,7 @@ const Login = ({ history }) => {
 
   useEffect(() => {
     if (user && user.token) history.push("/");
-  }, [user]);
+  }, [user, history]);
 
   const roleBasedRedirect = (res) => {
     if(res.data.role === 'admin') {

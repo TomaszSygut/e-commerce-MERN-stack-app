@@ -4,9 +4,10 @@ import {useHistory} from 'react-router-dom'
 const LoadingToRedirect = () => {
 
     const [count, setCount] = useState(5);
+   
     let history = useHistory();
-
     useEffect(() => {
+        
  const interval = setInterval(() => {
 setCount((currentCount) => --currentCount)
  }, 1000)
@@ -14,7 +15,7 @@ setCount((currentCount) => --currentCount)
  count === 0 && history.push('/')
  // cleanup
  return () => clearInterval(interval)
-    }, [count]);
+    }, [count, history]);
 
     return (
         <div className="container p-5 text-center">

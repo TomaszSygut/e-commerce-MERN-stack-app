@@ -31,6 +31,7 @@ const Password = () => {
           className="form-control"
           placeholder="Enter new password" 
           disabled={loading}
+          value={password}
         />
         <button className="btn btn-primary" disabled={!password || loading || password.length < 6}>Submit</button>
       </div>

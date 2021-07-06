@@ -43,20 +43,25 @@ const CategoryCreate = () => {
       });
   };
 
-const handleRemove = async (slug) =>{
- if(window.confirm("Are you sure that you want delete this category?")) {
-   setLoading(true)
-   removeCategory(slug, user.token)
-   .then(res => {
-     setLoading(false);
-     toast.error(`${res.data.name} deleted`)
-     loadCategories();
-   })
-   .catch(err => {
-    if (err.response.status === 400) toast.error(err.response.data);
-   })
- }
-}
+  const handleRemove = async (slug) => {
+    // let answer = window.confirm("Delete?");
+    // console.log(answer, slug);
+    if (window.confirm("Delete?")) {
+      setLoading(true);
+      removeCategory(slug, user.token)
+        .then((res) => {
+          setLoading(false);
+          toast.error(`${res.data.name} deleted`);
+          loadCategories();
+        })
+        .catch((err) => {
+          if (err.response.status === 400) {
+            setLoading(false);
+            toast.error(err.response.data);
+          }
+        });
+    }
+  };
 
   const categoryForm = () => (
     <form onSubmit={handleSubmit}>
@@ -93,23 +98,22 @@ const handleRemove = async (slug) =>{
           {categories.map((c) => (
             <div className="alert alert-secondary" key={c._id}>
               {c.name}
-
-              <span onClick={() =>{
-                handleRemove(c.slug)
-              }}className="btn btn-sm float-right">
+              <span
+                onClick={() => handleRemove(c.slug)}
+                className="btn btn-sm float-right"
+              >
                 <DeleteOutlined className="text-danger" />
               </span>
-
-              <span className="btn btn-sm float-right mr-3">
-                <Link to={`/admin/category/${c.slug}`}>
-                  <EditOutlined />
-                </Link>
-              </span>
+              <Link to={`/admin/category/${c.slug}`}>
+                <span className="btn btn-sm float-right">
+                  <EditOutlined className="text-warning" />
+                </span>
+              </Link>
             </div>
           ))}
-        </div>
+        </div> 
       </div>
-    </div>
+    </div> 
   );
 };
 

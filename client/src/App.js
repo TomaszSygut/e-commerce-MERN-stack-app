@@ -9,8 +9,10 @@ import Home from "./pages/Home";
 import Header from "./components/nav/Header";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import ForgotPassword from "./pages/auth/ForgotPassword";
-import History from './pages/user/History'
 import UserRoute from './components/routes/UserRoute';
+import Password from './pages/user/Password';
+import Wishlist from './pages/user/Wishlist';
+import History from './pages/user/History'
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
@@ -57,6 +59,8 @@ const App = () => {
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
         <UserRoute exact path="/user/history" component={History} />
+        <UserRoute exact path="/user/password" component={Password} />
+        <UserRoute exact path="/user/wishlist" component={Wishlist} /> 
       </Switch>
     </>
   );

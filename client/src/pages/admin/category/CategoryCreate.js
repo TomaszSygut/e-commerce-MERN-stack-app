@@ -10,6 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import CategoryForm from "../../../components/forms/CategoryForm";
+import LocalSearch from "../../../components/forms/LocalSearch";
 
 const CategoryCreate = () => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -17,6 +18,8 @@ const CategoryCreate = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  // step 1
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     loadCategories();
@@ -64,6 +67,10 @@ const CategoryCreate = () => {
     }
   };
 
+
+
+  const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -76,13 +83,16 @@ const CategoryCreate = () => {
           ) : (
             <h4>Create category</h4>
           )} 
-        <CategoryForm
+          <CategoryForm 
             handleSubmit={handleSubmit}
             name={name}
             setName={setName}
+          /> 
+          <LocalSearch
+          setKeyword={setKeyword}
+          keyword={keyword}
           />
-          <hr />
-          {categories.map((c) => (
+          {categories.filter(searched(keyword)).map((c) => (
             <div className="alert alert-secondary" key={c._id}>
               {c.name}
               <span

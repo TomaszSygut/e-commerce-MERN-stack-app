@@ -5,7 +5,7 @@ import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import { createProduct } from "../../../functions/product";
 import { toast } from "react-toastify";
 import { getCategories, getCategorySubs } from "../../../functions/category";
-
+import FileUpload from "../../../components/forms/FileUpload";
 const initialState = {
   title: "Macbook Pro",
   description: "This is the best Apple product",
@@ -77,7 +77,9 @@ const ProductCreate = () => {
         <div className="col-md-10">
           <h4>Product create</h4>
           <hr />
-
+          <div className="p-3">
+            <FileUpload />
+          </div>
           <ProductCreateForm
             handleChange={handleChange}
             handleSubmit={handleSubmit}

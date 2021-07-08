@@ -7,19 +7,18 @@ const ForgotPassword = ({ history }) => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-const {user} = useSelector(state => ({...state}))
+  const { user } = useSelector((state) => ({ ...state }));
 
-useEffect(() => {
-  if(user && user.token) {
-    history.push("/")
-  }
-}, [user, history])
+  useEffect(() => {
+    if (user && user.token) history.push("/");
+  }, [user, history]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-//dddddd
+
     const config = {
-      url: `${process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT}`,
+      url: process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT,
       handleCodeInApp: true,
     };
 
@@ -60,7 +59,7 @@ useEffect(() => {
         </button>
       </form>
     </div>
-  ); 
+  );
 };
 
 export default ForgotPassword;

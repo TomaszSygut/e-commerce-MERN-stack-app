@@ -67,8 +67,7 @@ const CategoryCreate = () => {
     }
   };
 
-
-
+  // step 4
   const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
 
   return (
@@ -82,16 +81,18 @@ const CategoryCreate = () => {
             <h4 className="text-danger">Loading..</h4>
           ) : (
             <h4>Create category</h4>
-          )} 
-          <CategoryForm 
+          )}
+
+          <CategoryForm
             handleSubmit={handleSubmit}
             name={name}
             setName={setName}
-          /> 
-          <LocalSearch
-          setKeyword={setKeyword}
-          keyword={keyword}
           />
+
+          {/* step 2 and step 3 */}
+          <LocalSearch keyword={keyword} setKeyword={setKeyword} />
+
+          {/* step 5 */}
           {categories.filter(searched(keyword)).map((c) => (
             <div className="alert alert-secondary" key={c._id}>
               {c.name}

@@ -49,11 +49,13 @@ const CategoryUpdate = ({ history, match }) => {
           ) : (
             <h4>Update category</h4>
           )}
-              <CategoryForm
+
+          <CategoryForm
             handleSubmit={handleSubmit}
             name={name}
             setName={setName}
           />
+
           <hr />
         </div>
       </div>

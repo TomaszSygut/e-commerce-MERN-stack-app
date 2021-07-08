@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const {readdirSync} = require("fs");
+const { readdirSync } = require("fs");
 const cors = require("cors");
 require("dotenv").config();
 // app
@@ -25,16 +25,13 @@ app.use(bodyParser.json({ limit: "2mb" }));
 app.use(cors());
 
 //routes middleware
-readdirSync('./routes').map((r) => {
+readdirSync("./routes").map((r) => {
+  app.use("/api", require("./routes/" + r));
 
-app.use("/api", require("./routes/" + r));
-
-console.log(r)
+  console.log(r);
 });
 //port
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
   console.log(`Server is running on port: ${port} `);
 });
-
-

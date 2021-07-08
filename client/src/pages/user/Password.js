@@ -8,19 +8,23 @@ const Password = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-   e.preventDefault();
-   setLoading(true)
-   await auth.currentUser.updatePassword(password)
-   .then(() => {
-    setLoading(false);
-    setPassword('')
-    toast.success('Password updated');
-   })
-   .catch(err => {
-    setLoading(false);
-    toast.error(err.message);
-   })
-  }
+    e.preventDefault();
+    setLoading(true);
+    // console.log(password);
+
+    await auth.currentUser
+      .updatePassword(password)
+      .then(() => {
+        setLoading(false);
+        setPassword("");
+        toast.success("Password updated");
+      })
+      .catch((err) => {
+        setLoading(false);
+        toast.error(err.message);
+      });
+  };
+
   const passwordUpdateForm = () => (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
@@ -29,14 +33,20 @@ const Password = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
           className="form-control"
-          placeholder="Enter new password" 
+          placeholder="Enter new password"
           disabled={loading}
           value={password}
         />
-        <button className="btn btn-primary" disabled={!password || loading || password.length < 6}>Submit</button>
+        <button
+          className="btn btn-primary"
+          disabled={!password || password.length < 6 || loading}
+        >
+          Submit
+        </button>
       </div>
     </form>
-  )
+  );
+
   return (
     <div className="container-fluid">
       <div className="row">

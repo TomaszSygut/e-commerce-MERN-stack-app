@@ -18,17 +18,15 @@ const productSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      trim: true,
       required: true,
       maxlength: 2000,
       text: true,
     },
     price: {
       type: Number,
-      trim: true,
       required: true,
+      trim: true,
       maxlength: 32,
-      text: true,
     },
     category: {
       type: ObjectId,
@@ -37,7 +35,7 @@ const productSchema = new mongoose.Schema(
     subs: [
       {
         type: ObjectId,
-        ref: "Category",
+        ref: "Sub",
       },
     ],
     quantity: Number,
@@ -45,9 +43,9 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    // images: {
-    //   type: Array,
-    // },
+    images: {
+      type: Array,
+    },
     shipping: {
       type: String,
       enum: ["Yes", "No"],
@@ -60,12 +58,12 @@ const productSchema = new mongoose.Schema(
       type: String,
       enum: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
     },
-    //   ratings: [
-    //       {
-    //           star: Number,
-    //           postedBy: {type: ObjectId, ref: "User"},
-    //       },
-    //   ],
+    // ratings: [
+    //   {
+    //     star: Number,
+    //     postedBy: { type: ObjectId, ref: "User" },
+    //   },
+    // ],
   },
   { timestamps: true }
 );

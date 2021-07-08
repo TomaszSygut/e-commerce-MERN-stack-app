@@ -79,7 +79,7 @@ const Header = () => {
             </Item>
           )}
           {user && user.role === "admin" && (
-            <Item> 
+            <Item>
               <Link to="/admin/dashboard"> Dashboard</Link>
             </Item>
           )}

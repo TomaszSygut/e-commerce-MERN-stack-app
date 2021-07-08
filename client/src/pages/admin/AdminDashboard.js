@@ -1,5 +1,6 @@
 import React from "react";
 import AdminNav from "../../components/nav/AdminNav";
+
 const AdminDashboard = () => {
   return (
     <div className="container-fluid">
@@ -7,7 +8,7 @@ const AdminDashboard = () => {
         <div className="col-md-2">
           <AdminNav />
         </div>
-        <div className="col">Admin page</div>
+        <div className="col">admin dashbaord page</div>
       </div>
     </div>
   );

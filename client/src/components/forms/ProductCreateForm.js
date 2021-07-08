@@ -1,15 +1,16 @@
 import React from "react";
 import { Select } from "antd";
+
 const { Option } = Select;
 
 const ProductCreateForm = ({
   handleSubmit,
   handleChange,
+  setValues,
   values,
-  handleCategoryChange,
+  handleCatagoryChange,
   subOptions,
   showSub,
-  setValues,
 }) => {
   // destructure
   const {
@@ -116,7 +117,7 @@ const ProductCreateForm = ({
         <select
           name="category"
           className="form-control"
-          onChange={handleCategoryChange}
+          onChange={handleCatagoryChange}
         >
           <option>Please select</option>
           {categories.length > 0 &&
@@ -128,25 +129,28 @@ const ProductCreateForm = ({
         </select>
       </div>
 
-      <div>
-        <label> Sub Categories</label>
-        <Select
-          mode="multiple"
-          style={{ width: "100%" }}
-          placeholder="Please select"
-          value={subs}
-          onChange={(value) => setValues({ ...values, subs: value })}
-        >
-          {subOptions.length &&
-            subOptions.map((s) => (
-              <Option key={s._id} value={s._id}>
-                {s.name}
-              </Option>
-            ))}
-        </Select>
-      </div>
+      {showSub && (
+        <div>
+          <label>Sub Categories</label>
+          <Select
+            mode="multiple"
+            style={{ width: "100%" }}
+            placeholder="Please select"
+            value={subs}
+            onChange={(value) => setValues({ ...values, subs: value })}
+          >
+            {subOptions.length &&
+              subOptions.map((s) => (
+                <Option key={s._id} value={s._id}>
+                  {s.name}
+                </Option>
+              ))}
+          </Select>
+        </div>
+      )}
 
-      <button className="btn btn-outline-info mt-3">Save</button>
+      <br />
+      <button className="btn btn-outline-info">Save</button>
     </form>
   );
 };

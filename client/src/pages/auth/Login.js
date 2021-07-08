@@ -7,34 +7,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createOrUpdateUser } from "../../functions/auth";
 
-
-
-
 const Login = ({ history }) => {
-  
-  const [email, setEmail] = useState("thomassygut@gmail.com");
-  const [password, setPassword] = useState("Menel666");
+  const [email, setEmail] = useState("gqlreactnode@gmail.com");
+  const [password, setPassword] = useState("gggggg");
   const [loading, setLoading] = useState(false);
+
   const { user } = useSelector((state) => ({ ...state }));
-  let dispatch = useDispatch();
 
   useEffect(() => {
     if (user && user.token) history.push("/");
   }, [user, history]);
 
+  let dispatch = useDispatch();
+
   const roleBasedRedirect = (res) => {
-    if(res.data.role === 'admin') {
+    if (res.data.role === "admin") {
       history.push("/admin/dashboard");
-    }else {
-      history.push('/user/history')
+    } else {
+      history.push("/user/history");
     }
-  }
-  
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    // console.table(email, password);
     try {
       const result = await auth.signInWithEmailAndPassword(email, password);
+      // console.log(result);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
 
@@ -50,10 +50,11 @@ const Login = ({ history }) => {
               _id: res.data._id,
             },
           });
-                roleBasedRedirect(res);
+          roleBasedRedirect(res);
         })
-        .catch();
+        .catch((err) => console.log(err));
 
+      // history.push("/");
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -61,27 +62,28 @@ const Login = ({ history }) => {
     }
   };
 
-  //////////////////////////////////////////////////
-
   const googleLogin = async () => {
     auth
       .signInWithPopup(googleAuthProvider)
       .then(async (result) => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
-        createOrUpdateUser(idTokenResult.token).then((res) => {
-          dispatch({
-            type: "LOGGED_IN_USER",
-            payload: {
-              name: res.data.name,
-              email: res.data.email,
-              token: idTokenResult.token,
-              role: res.data.role,
-              _id: res.data._id,
-            },
-          });
-          roleBasedRedirect(res)
-        });
+        createOrUpdateUser(idTokenResult.token)
+          .then((res) => {
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
+              },
+            });
+            roleBasedRedirect(res);
+          })
+          .catch((err) => console.log(err));
+        // history.push("/");
       })
       .catch((err) => {
         console.log(err);

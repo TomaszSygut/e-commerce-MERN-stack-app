@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import { createProduct } from "../../../functions/product";
 import { toast } from "react-toastify";
+import { getCategories, getCategorySubs } from "../../../functions/category";
 
 const initialState = {
   title: "Macbook Pro",
@@ -23,14 +24,33 @@ const initialState = {
 
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
-
+  const [subOptions, setSubOptions] = useState([]);
   // redux
   const { user } = useSelector((state) => ({ ...state }));
 
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const loadCategories = () => {
+    getCategories().then((c) => setValues({ ...values, categories: c.data }));
+  };
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     // console.log(e.target.name, " ----- ", e.target.value);
   };
+
+  const handleCategoryChange = (e) => {
+    e.preventDefault();
+    console.log("CLICKED CATEGORY", e.target.value);
+    setValues({ ...values, category: e.target.values });
+
+    getCategorySubs(e.target.value).then((res) => {
+      setSubOptions(res.data);
+      console.log(res.data);
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     createProduct(values, user.token)
@@ -58,6 +78,7 @@ const ProductCreate = () => {
           <ProductCreateForm
             handleChange={handleChange}
             handleSubmit={handleSubmit}
+            handleCategoryChange={handleCategoryChange}
             values={values}
           />
         </div>

@@ -16,11 +16,6 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.read = async (req, res) => {
-  let products = await Product.find({});
-  res.json(products);
-};
-
 exports.listAll = async (req, res) => {
   let products = await Product.find({})
     .limit(parseInt(req.params.count))
@@ -39,6 +34,14 @@ exports.remove = async (req, res) => {
     res.json(deleted);
   } catch (err) {
     console.log(err);
-    return res.status(400).send("Product delete failed");
+    return res.staus(400).send("Product delete failed");
   }
+};
+
+exports.read = async (req, res) => {
+  const product = await Product.findOne({ slug: req.params.slug })
+    .populate("category")
+    .populate("subs")
+    .exec();
+  res.json(product);
 };

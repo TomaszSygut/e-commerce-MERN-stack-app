@@ -1,30 +1,26 @@
-
-body{
-    height: 200vh;
+body {
+  height: 200vh;
 }
 /* .auth-container {
-
     display: flex;
     position: absolute;
     right: 0;
 } */
 .right-side:nth-child(2) {
-
-    right: 100px;
-    position: absolute!important;
+  right: 100px;
+  position: absolute !important;
 }
-.right-side, .right-side-username {
-    right: 0;
-    position: absolute!important;
-
+.right-side,
+.right-side-username {
+  right: 0;
+  position: absolute !important;
 }
-@media (max-width: 450px) { 
-    .right-side:nth-child(2) {
-
-        position: relative!important;
-    }
-    .right-side:nth-child(3) {
-        position: relative!important;
-    right: 0;
-    }
+@media (max-width: 450px) {
+  .right-side:nth-child(2) {
+    position: relative !important;
   }
+  .right-side:nth-child(3) {
+    position: relative !important;
+    right: 0;
+  }
+}

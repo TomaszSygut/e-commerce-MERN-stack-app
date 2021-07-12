@@ -97,13 +97,13 @@ const FileUpload = ({ values, setValues, setLoading }) => {
                 src={image.url}
                 size={100}
                 shape="square"
-                className="ml-3 mt-2"
+                className="ml-3"
               />
             </Badge>
           ))}
       </div>
       <div className="row">
-        <label className="btn btn-primary">
+        <label className="btn btn-primary btn-raised mt-3">
           Choose File
           <input
             type="file"

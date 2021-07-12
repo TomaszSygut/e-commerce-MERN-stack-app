@@ -12,14 +12,13 @@ const initialState = {
   title: "",
   description: "",
   price: "",
-  categories: [],
   category: "",
   subs: [],
   shipping: "",
   quantity: "",
   images: [],
   colors: ["Black", "Brown", "Silver", "White", "Blue"],
-  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
+  brands: ["Apple", "Samsung", "Microsoft", "Leno vo", "ASUS"],
   color: "",
   brand: "",
 };
@@ -28,12 +27,17 @@ const ProductUpdate = ({ match }) => {
   // state
   const [values, setValues] = useState(initialState);
 
+  const [subOptions, setSubOptions] = useState([]);
+
+  const [categories, setCategories] = useState([]);
+
   const { user } = useSelector((state) => ({ ...state }));
   // router
   const { slug } = match.params;
 
   useEffect(() => {
     loadProduct();
+    loadCategories();
   }, []);
 
   const loadProduct = () => {
@@ -43,6 +47,12 @@ const ProductUpdate = ({ match }) => {
     });
   };
 
+  const loadCategories = () =>
+    getCategories().then((c) => {
+      setValues({ ...values, categories: c.data });
+      setCategories(c.data);
+    });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     //
@@ -51,6 +61,16 @@ const ProductUpdate = ({ match }) => {
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     // console.log(e.target.name, " ----- ", e.target.value);
+  };
+
+  const handleCatagoryChange = (e) => {
+    e.preventDefault();
+    console.log("CLICKED CATEGORY", e.target.value);
+    setValues({ ...values, subs: [], category: e.target.value });
+    getCategorySubs(e.target.value).then((res) => {
+      console.log("SUB OPTIONS ON CATGORY CLICK", res);
+      setSubOptions(res.data);
+    });
   };
 
   return (
@@ -69,6 +89,9 @@ const ProductUpdate = ({ match }) => {
             handleChange={handleChange}
             setValues={setValues}
             values={values}
+            categories={categories}
+            handleCategoryChange={handleCatagoryChange}
+            subOptions={subOptions}
           />
           <hr />
         </div>

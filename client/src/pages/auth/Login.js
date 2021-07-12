@@ -9,7 +9,7 @@ import { createOrUpdateUser } from "../../functions/auth";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("thomassygut@gmail.com");
-  const [password, setPassword] = useState("Menel666");
+  const [password, setPassword] = useState("qwerty123");
   const [loading, setLoading] = useState(false);
 
   const { user } = useSelector((state) => ({ ...state }));

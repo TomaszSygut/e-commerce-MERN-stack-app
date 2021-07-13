@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import laptop from "../../images/laptop.jpeg";
+import ProductListItems from "./ProductListItems";
 const SingleProduct = ({ product }) => {
   const { title, description, images, slug } = product;
   const { Meta } = Card;
@@ -11,14 +13,19 @@ const SingleProduct = ({ product }) => {
   return (
     <>
       <div className="col-md-7">
-        <Carousel showArrows={true} autoPlay infiniteLoop>
-          {images &&
-            images.map((image) => (
-              <img src={image.url} key={image.public_id} />
-            ))}
-        </Carousel>
+        {images && images.length ? (
+          <Carousel showArrows={true} autoPlay infiniteLoop>
+            {images &&
+              images.map((image) => (
+                <img src={image.url} key={image.public_id} />
+              ))}
+          </Carousel>
+        ) : (
+          <Card cover={<img src={laptop} className="mb-3 card-image" />}></Card>
+        )}
       </div>
       <div className="col-md-5">
+        <h1 className="bg-info p-3">{title}</h1>
         <Card
           actions={[
             <>
@@ -30,8 +37,7 @@ const SingleProduct = ({ product }) => {
             </Link>,
           ]}
         >
-          <Meta title={title} description={description} />
-          <p>price/category/subs/shipping/color/brand/quantity avaiable/sold</p>
+          <ProductListItems product={product} />
         </Card>
       </div>
     </>

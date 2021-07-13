@@ -46,12 +46,16 @@ const BestSellers = () => {
           </div>
         )}
       </div>
-      <Pagination
-        current={page}
-        className="d-flex justify-content-center"
-        total={(productsCount / 3) * 10}
-        onChange={(value) => setPage(value)}
-      />
+      <div className="row">
+        <div className="col-md pb-5 pt-2">
+          <Pagination
+            current={page}
+            className="d-flex justify-content-center"
+            total={(productsCount / 3) * 10}
+            onChange={(value) => setPage(value)}
+          />
+        </div>
+      </div>
     </>
   );
 };

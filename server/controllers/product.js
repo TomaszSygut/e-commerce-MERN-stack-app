@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const User = require("../models/user");
 const slugify = require("slugify");
 
 exports.create = async (req, res) => {
@@ -126,6 +127,8 @@ exports.productStar = async (req, res) => {
       },
       { new: true }
     ).exec();
+    console.log("ratingAdded", ratingAdded);
+    res.json(ratingAdded);
   } else {
     // if user have already left rating, update it
     const ratingUpdated = await Product.updateOne(

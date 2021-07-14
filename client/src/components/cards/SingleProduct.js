@@ -8,7 +8,10 @@ import laptop from "../../images/laptop.jpeg";
 import ProductListItems from "./ProductListItems";
 import StarRating from "react-star-ratings";
 import RatingModal from "../modal/RatingModal";
-const SingleProduct = ({ product }) => {
+
+//Children component of product page
+
+const SingleProduct = ({ product, onStarClick, star }) => {
   const { title, description, images, slug, _id } = product;
   const { TabPane } = Tabs;
   const { Meta } = Card;
@@ -51,10 +54,8 @@ const SingleProduct = ({ product }) => {
               <StarRating
                 name={_id}
                 numberOfStars={5}
-                rating={2}
-                changeRating={(newRating, name) =>
-                  console.log("newRating", newRating, "name", name)
-                }
+                rating={star}
+                changeRating={onStarClick}
                 isSelectable={true}
                 starRatedColor="red"
               />

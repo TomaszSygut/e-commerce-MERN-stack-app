@@ -8,18 +8,19 @@ const CategoryList = () => {
 
   useEffect(() => {
     setLoading(true);
-    getCategories().then((categories) => {
-      setCategories(categories.data);
+    getCategories().then((c) => {
+      setCategories(c.data);
       setLoading(false);
     });
   }, []);
+
   const showCategories = () =>
-    categories.map((category) => (
+    categories.map((c) => (
       <div
-        key={category._id}
-        className="btn btn-outlined-primary btn-lg btn-block btn-raised m-3"
+        key={c._id}
+        className="col btn btn-outlined-primary btn-lg btn-block btn-raised m-3"
       >
-        <Link to={`/category/${category.slug}`}>{category.name}</Link>
+        <Link to={`/category/${c.slug}`}>{c.name}</Link>
       </div>
     ));
 
@@ -27,7 +28,7 @@ const CategoryList = () => {
     <div className="container">
       <div className="row">
         {loading ? (
-          <h4 className="text-center"> Loading...</h4>
+          <h4 className="text-center">Loading...</h4>
         ) : (
           showCategories()
         )}

@@ -9,14 +9,23 @@ const Product = ({ match }) => {
   const { user } = useSelector((state) => ({ ...state }));
   useEffect(() => {
     loadSingleProduct();
-  }, []);
+  }, [slug]);
+
+  useEffect(() => {
+    if (product.ratings && user) {
+      let existingRatingObject = product.ratings.find(
+        (ele) => ele.postedBy.toString() === user._id.toString()
+      );
+      existingRatingObject && setStar(existingRatingObject.star);
+    }
+  });
 
   const loadSingleProduct = () =>
     getProduct(slug).then((res) => setProduct(res.data));
 
   const onStarClick = (newRating, name) => {
     setStar(newRating);
-    productStar(name, star, user.token).then((res) => {
+    productStar(name, newRating, user.token).then((res) => {
       console.log("rating clicked", res.data);
       loadSingleProduct(); // Showing updated rating in real time
     });

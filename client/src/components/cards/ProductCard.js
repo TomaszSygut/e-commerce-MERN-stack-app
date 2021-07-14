@@ -3,6 +3,7 @@ import { Card, Skeleton } from "antd";
 import laptop from "../../images/laptop.jpeg";
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { showAverage } from "../../functions/rating";
 
 const ProductCard = ({ product }) => {
   // destructure
@@ -10,6 +11,11 @@ const ProductCard = ({ product }) => {
   const { Meta } = Card;
   return (
     <>
+      {product && product.ratings && product.ratings.length > 0 ? (
+        showAverage(product)
+      ) : (
+        <div className="text-center pt-1 pb-3 text-danger">No rating yet</div>
+      )}
       <Card
         cover={
           <img

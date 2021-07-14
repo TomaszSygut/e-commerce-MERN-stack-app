@@ -39,7 +39,7 @@ const ProductUpdate = ({ match, history }) => {
   useEffect(() => {
     loadProduct();
     loadCategories();
-  }, []);
+  });
 
   const loadProduct = () => {
     getProduct(slug).then((p) => {
@@ -53,7 +53,7 @@ const ProductUpdate = ({ match, history }) => {
       // 3 prepare array of sub ids to show as default sub values in antd Select
       let arr = [];
       p.data.subs.map((s) => {
-        arr.push(s._id);
+        return arr.push(s._id);
       });
       console.log("ARR", arr);
       setArrayOfSubs((prev) => arr); // required for ant design select to work

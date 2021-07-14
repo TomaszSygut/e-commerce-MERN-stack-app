@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Skeleton } from "antd";
+import { Card } from "antd";
 import laptop from "../../images/laptop.jpeg";
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -20,6 +20,7 @@ const ProductCard = ({ product }) => {
         cover={
           <img
             src={images && images.length ? images[0].url : laptop}
+            alt={images && images.length ? images[0].url : laptop}
             style={{ height: "150px", objectFit: "cover" }}
             className="p-1"
           />

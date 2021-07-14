@@ -16,7 +16,7 @@ const Product = ({ match }) => {
 
   useEffect(() => {
     loadSingleProduct();
-  }, [slug]);
+  });
 
   useEffect(() => {
     if (product.ratings && user) {
@@ -25,7 +25,7 @@ const Product = ({ match }) => {
       );
       existingRatingObject && setStar(existingRatingObject.star); // current user's star
     }
-  });
+  }, [setStar, product.ratings, user]);
 
   const loadSingleProduct = () => {
     getProduct(slug).then((res) => {
@@ -34,7 +34,6 @@ const Product = ({ match }) => {
       getRelated(res.data._id).then((res) => setRelated(res.data));
     });
   };
-
   const onStarClick = (newRating, name) => {
     setStar(newRating);
     console.table(newRating, name);

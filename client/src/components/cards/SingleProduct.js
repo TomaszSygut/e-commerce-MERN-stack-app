@@ -21,10 +21,17 @@ const SingleProduct = ({ product, onStarClick, star }) => {
       <div className="col-md-7">
         {images && images.length ? (
           <Carousel showArrows={true} autoPlay infiniteLoop>
-            {images && images.map((i) => <img src={i.url} key={i.public_id} />)}
+            {images &&
+              images.map((i) => (
+                <img src={i.url} key={i.public_id} alt={i.url} />
+              ))}
           </Carousel>
         ) : (
-          <Card cover={<img src={Laptop} className="mb-3 card-image" />}></Card>
+          <Card
+            cover={
+              <img src={Laptop} alt={Laptop} className="mb-3 card-image" />
+            }
+          ></Card>
         )}
 
         <Tabs type="card">

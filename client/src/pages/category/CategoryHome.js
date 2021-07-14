@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getCategory } from "../../functions/category";
-import { Link } from "react-router-dom";
 import ProductCard from "../../components/cards/ProductCard";
-import CategoryList from "../../components/category/CategoryList";
 
 const CategoryHome = ({ match }) => {
   const [category, setCategory] = useState({});
@@ -19,7 +17,7 @@ const CategoryHome = ({ match }) => {
       setProducts(res.data.products);
       setLoading(false);
     });
-  }, []);
+  }, [slug]);
 
   return (
     <div className="container-fluid">

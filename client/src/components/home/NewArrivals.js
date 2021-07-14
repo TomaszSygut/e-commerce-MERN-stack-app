@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getProducts, getProductsCount } from "../../functions/product";
 import ProductCard from "../cards/ProductCard";
-import Jumbotron from "../cards/Jumbotron";
 import LoadingCard from "../cards/LoadingCard";
 import { Pagination } from "antd";
 
@@ -12,24 +11,22 @@ const NewArrivals = () => {
   const [productsCount, setProductsCount] = useState(0);
 
   useEffect(() => {
+    const loadAllProducts = () => {
+      setLoading(true);
+      // sort, order , limit
+      getProducts("createdAt", "desc", page).then((res) => {
+        setProducts(res.data);
+        setLoading(false);
+      });
+    };
     loadAllProducts();
   }, [page]);
 
   useEffect(() => {
     getProductsCount().then((res) => {
       setProductsCount(res.data);
-      console.log(res.data);
     });
   }, []);
-
-  const loadAllProducts = () => {
-    setLoading(true);
-    // sort, order , limit
-    getProducts("createdAt", "desc", page).then((res) => {
-      setProducts(res.data);
-      setLoading(false);
-    });
-  };
 
   return (
     <>

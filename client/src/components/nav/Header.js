@@ -66,16 +66,15 @@ const Header = () => {
           icon={<SettingOutlined />}
           title={user.email && user.email.split("@")[0]}
           className="float-right"
-          key="email"
         >
           {user && user.role === "subscriber" && (
-            <Item key="dashboardd">
+            <Item>
               <Link to="/user/history">Dashboard</Link>
             </Item>
           )}
 
           {user && user.role === "admin" && (
-            <Item key="dashboard">
+            <Item>
               <Link to="/admin/dashboard">Dashboard</Link>
             </Item>
           )}
@@ -85,7 +84,7 @@ const Header = () => {
           </Item>
         </SubMenu>
       )}
-      <span
+      <div
         style={{
           display: "flex",
           justifyContent: "flex-end",
@@ -93,7 +92,7 @@ const Header = () => {
         }}
       >
         <Search />
-      </span>
+      </div>
     </Menu>
   );
 };

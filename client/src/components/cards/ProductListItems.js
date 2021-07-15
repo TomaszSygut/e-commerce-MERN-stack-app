@@ -1,14 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 const ProductListItems = ({ product }) => {
-  const { price, category, subs, shipping, color, brand, quantity, sold } =
-    product;
+  const {
+    price,
+    category,
+    subs,
+    shipping,
+    color,
+    brand,
+    quantity,
+    sold,
+  } = product;
+
   return (
     <ul className="list-group">
       <li className="list-group-item">
         Price{" "}
         <span className="label label-default label-pill pull-xs-right">
-          {"$" + price}
+          $ {price}
         </span>
       </li>
 
@@ -27,14 +37,13 @@ const ProductListItems = ({ product }) => {
       {subs && (
         <li className="list-group-item">
           Sub Categories
-          {subs.map((sub) => (
+          {subs.map((s) => (
             <Link
-              key={sub._id}
-              to={`/sub/${sub.slug}`}
+              key={s._id}
+              to={`/sub/${s.slug}`}
               className="label label-default label-pill pull-xs-right"
             >
-              {sub.name}
-              dwa
+              {s.name}
             </Link>
           ))}
         </li>
@@ -62,7 +71,7 @@ const ProductListItems = ({ product }) => {
       </li>
 
       <li className="list-group-item">
-        Avaiable{" "}
+        Available{" "}
         <span className="label label-default label-pill pull-xs-right">
           {quantity}
         </span>

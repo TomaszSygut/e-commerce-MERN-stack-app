@@ -7,26 +7,25 @@ import { Pagination } from "antd";
 const BestSellers = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
   const [productsCount, setProductsCount] = useState(0);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    const loadAllProducts = () => {
-      setLoading(true);
-      // sort, order , limit
-      getProducts("sold", "desc", page).then((res) => {
-        setProducts(res.data);
-        setLoading(false);
-      });
-    };
     loadAllProducts();
   }, [page]);
 
   useEffect(() => {
-    getProductsCount().then((res) => {
-      setProductsCount(res.data);
-    });
+    getProductsCount().then((res) => setProductsCount(res.data));
   }, []);
+
+  const loadAllProducts = () => {
+    setLoading(true);
+    // sort, order, limit
+    getProducts("sold", "desc", page).then((res) => {
+      setProducts(res.data);
+      setLoading(false);
+    });
+  };
 
   return (
     <>
@@ -36,22 +35,22 @@ const BestSellers = () => {
         ) : (
           <div className="row">
             {products.map((product) => (
-              <div key={product._id} className="col-md-4 pb-5 pt-2">
+              <div key={product._id} className="col-md-4">
                 <ProductCard product={product} />
               </div>
             ))}
           </div>
         )}
       </div>
+
       <div className="row">
-        <div className="col-md pb-5 pt-2">
+        <nav className="col-md-4 offset-md-4 text-center pt-5 p-3">
           <Pagination
             current={page}
-            className="d-flex justify-content-center"
             total={(productsCount / 3) * 10}
             onChange={(value) => setPage(value)}
           />
-        </div>
+        </nav>
       </div>
     </>
   );

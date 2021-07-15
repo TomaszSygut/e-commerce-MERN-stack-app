@@ -8,9 +8,8 @@ import ProductCard from "../components/cards/ProductCard";
 import { Menu, Slider } from "antd";
 import { DollarOutlined } from "@ant-design/icons";
 
-const { SubMenu, ItemGroup } = Menu;
-
 const Shop = () => {
+  const { SubMenu, ItemGroup } = Menu;
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState([0, 0]);

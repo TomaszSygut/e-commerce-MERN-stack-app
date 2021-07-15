@@ -66,15 +66,16 @@ const Header = () => {
           icon={<SettingOutlined />}
           title={user.email && user.email.split("@")[0]}
           className="float-right"
+          key="email"
         >
           {user && user.role === "subscriber" && (
-            <Item>
+            <Item key="dashboardd">
               <Link to="/user/history">Dashboard</Link>
             </Item>
           )}
 
           {user && user.role === "admin" && (
-            <Item>
+            <Item key="dashboard">
               <Link to="/admin/dashboard">Dashboard</Link>
             </Item>
           )}

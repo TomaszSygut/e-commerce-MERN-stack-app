@@ -63,6 +63,7 @@ const Header = () => {
 
       {user && (
         <SubMenu
+          key="1"
           icon={<SettingOutlined />}
           title={user.email && user.email.split("@")[0]}
           className="float-right"

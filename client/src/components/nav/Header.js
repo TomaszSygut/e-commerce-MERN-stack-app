@@ -43,11 +43,11 @@ const Header = () => {
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home</Link>
       </Item>
-
-      <Item key="shop" icon={<ShoppingOutlined />}>
-        <Link to="/shop">Shop</Link>
-      </Item>
-
+      <div>
+        <Item key="shop" icon={<ShoppingOutlined />}>
+          <Link to="/shop">Shop</Link>
+        </Item>
+      </div>
       {!user && (
         <Item key="register" icon={<UserAddOutlined />} className="float-right">
           <Link to="/register">Register</Link>
@@ -83,10 +83,16 @@ const Header = () => {
           </Item>
         </SubMenu>
       )}
-
-      <span className="float-right p-1">
+      <div
+        className="p-1"
+        style={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "flex-end",
+        }}
+      >
         <Search />
-      </span>
+      </div>
     </Menu>
   );
 };

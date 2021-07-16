@@ -189,7 +189,19 @@ const handleQuery = async (req, res, query) => {
 
   res.json(products);
 };
-
+const handleStar = async (req, res, stars) => {
+  Product.aggregate([
+    {
+      $project: {
+        document: "$ROOT",
+        floorAverage: { $floor: { $avg: "$ratings.star" } },
+      },
+    },
+    {
+      $match: { floorAverage: stars },
+    },
+  ]);
+};
 const handlePrice = async (req, res, price) => {
   try {
     let products = await Product.find({
@@ -210,7 +222,7 @@ const handlePrice = async (req, res, price) => {
 };
 
 exports.searchFilters = async (req, res) => {
-  const { query, price, category } = req.body;
+  const { query, price, category, stars } = req.body;
 
   if (query) {
     console.log("query --->", query);
@@ -226,5 +238,10 @@ exports.searchFilters = async (req, res) => {
   if (category) {
     console.log("category ---->", category);
     await handleCategory(req, res, category);
+  }
+
+  if (stars) {
+    console.log("stars ----> ", stars);
+    await handleStar(req, res, stars);
   }
 };

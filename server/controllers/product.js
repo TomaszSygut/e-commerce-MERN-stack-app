@@ -200,7 +200,20 @@ const handleStar = async (req, res, stars) => {
     {
       $match: { floorAverage: stars },
     },
-  ]);
+  ])
+    .limit(12)
+    .exec((err, aggregates) => {
+      if (err) console.log("AGGREGATES ERROR");
+
+      Product.find({ _id: aggregates })
+        .populate("category", "_id name")
+        .populate("subs", "_id name")
+        .populate("postedBy", "_id name")
+        .exec((err, products) => {
+          if (err) console.log("PRODUCT AGGREGATE ERROR", err);
+          res.json(products);
+        });
+    });
 };
 const handlePrice = async (req, res, price) => {
   try {

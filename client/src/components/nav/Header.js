@@ -43,11 +43,10 @@ const Header = () => {
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home</Link>
       </Item>
-      <div>
-        <Item key="shop" icon={<ShoppingOutlined />}>
-          <Link to="/shop">Shop</Link>
-        </Item>
-      </div>
+
+      <Item key="shop" icon={<ShoppingOutlined />}>
+        <Link to="/shop">Shop</Link>
+      </Item>
 
       {!user && (
         <Item key="register" icon={<UserAddOutlined />} className="float-right">
@@ -63,7 +62,6 @@ const Header = () => {
 
       {user && (
         <SubMenu
-          key="1"
           icon={<SettingOutlined />}
           title={user.email && user.email.split("@")[0]}
           className="float-right"
@@ -85,15 +83,10 @@ const Header = () => {
           </Item>
         </SubMenu>
       )}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          width: "100%",
-        }}
-      >
+
+      <span className="float-right p-1">
         <Search />
-      </div>
+      </span>
     </Menu>
   );
 };

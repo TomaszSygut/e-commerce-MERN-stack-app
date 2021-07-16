@@ -4,6 +4,7 @@ import {
   fetchProductsByFilter,
 } from "../functions/product";
 import { getCategories } from "../functions/category";
+import { getSubs } from "../functions/sub";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
 import { Menu, Slider, Checkbox } from "antd";
@@ -23,8 +24,9 @@ const Shop = () => {
   const [ok, setOk] = useState(false);
   const [categories, setCategories] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
+  const [subs, setSubs] = useState([]);
   const [star, setStar] = useState("");
-
+  const [sub, setSub] = useState("");
   let dispatch = useDispatch();
   let { search } = useSelector((state) => ({ ...state }));
   const { text } = search;
@@ -33,6 +35,8 @@ const Shop = () => {
     loadAllProducts();
     // fetch categories
     getCategories().then((res) => setCategories(res.data));
+
+    getSubs().then((res) => setSubs(res.data));
   }, []);
 
   const fetchProducts = (arg) => {
@@ -145,7 +149,32 @@ const Shop = () => {
       <Star starClick={handleStarClick} numberOfStars={1} />
     </div>
   );
+  // 6. show products by sub category
+  const showSubs = () =>
+    subs.map((s) => (
+      <div
+        key={s._id}
+        className="p-1 m-1 badge badge-secondary"
+        onClick={() => handleSub(s)}
+        style={{ cursor: "pointer" }}
+      >
+        {s.name}
+      </div>
+    ));
 
+  const handleSub = (sub) => {
+    // console.log("SUB", s);
+    setSub(sub);
+
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    fetchProducts({ sub: sub });
+  };
   return (
     <div className="container-fluid">
       <div className="row">
@@ -197,6 +226,18 @@ const Shop = () => {
               }
             >
               <div style={{ maringTop: "-10px" }}>{showStars()}</div>
+            </SubMenu>
+
+            {/* sub category */}
+            <SubMenu
+              key="4"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Sub Categories
+                </span>
+              }
+            >
+              <div style={{ maringTop: "-10px" }}>{showSubs()}</div>
             </SubMenu>
           </Menu>
         </div>
